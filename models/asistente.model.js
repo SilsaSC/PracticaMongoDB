@@ -34,24 +34,23 @@ const AsistenteSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Locale',
     },
-    ponente: {
+    ponente: [{
         type: Schema.Types.ObjectId,
         ref: 'Ponente',
         require: true
-    },
-    webinar: {
+    }],
+    webinar: [{
         type: Schema.Types.ObjectId,
         ref: 'Webinar',
-    },
-    certificado: {
+    }],
+    certificado: [{
         type: Schema.Types.ObjectId,
         ref: 'Certificado',
-        require: true
-    },
-    sala: {
+    }],
+    sala: [{
         type: Schema.Types.ObjectId,
         ref: 'Sala',
-    }
+    }]
 }, { collection: 'asistentes' });
 //se utiliza collection para indicar el nombre como queremos que se cree 
 //la coleccion en la base de datos

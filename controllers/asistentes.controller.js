@@ -1,6 +1,7 @@
 const { response } = require('express');
 
 const Asistente = require('../models/asistente.model');
+const Certificado = require('../models/certificado.model');
 
 const getAsistentes = async(req, res = response) => {
 
@@ -20,22 +21,20 @@ const getAsistentes = async(req, res = response) => {
 }
 
 const crearAsistente = async(req, res = response) => {
-
-    const uid = req.uid;
-    const asistente = new Asistente({
-        asistente: uid,
-        ...req.body
-    });
-
-
     try {
+        const nuevoAsistente = new Asistente(req.body);
 
-        const asistenteDB = await asistente.save();
+        const certificado = await Certificado.findById(req.params)
+        nuevoAsistente.certificado = certificado
+        await nuevoAsistente.save()
+        certificado.asistente.push(nuevoAsistente)
 
+        await certificado.save();
 
+        const asistenteDB = await nuevoAsistente.save();
         res.json({
             ok: true,
-            asistente: asistenteDB
+            asistenteDB
         })
 
     } catch (error) {

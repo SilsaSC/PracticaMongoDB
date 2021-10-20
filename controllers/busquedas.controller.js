@@ -47,6 +47,69 @@ const busquedaTotal = async(req, res = response) => {
 
 }
 
+//Buscar factura
+const busquedaFactura = async(req, res = response) => {
+
+        const idlocal = req.params.idlocal;
+        const idponente = req.params.idponente;
+        const iduasurio = req.params.iduasurio;
+        const idwebinar = req.params.idwebinar;
+        const idcertificado = req.params.idcertificado;
+        const idsala = req.params.idsala;
+
+
+        try {
+            const existeFactura = await Factura.find({ idlocal, idponente, iduasurio, idwebinar, idcertificado, idsala });
+            if (!existeFactura) {
+                return res.status(404).json({
+                    ok: false,
+                    msg: "No existe factura que coincida con la busqueda"
+                });
+            }
+            res.json({
+                ok: true,
+                factura: existeFactura
+            })
+        } catch (error) {
+
+            console.log(error);
+            res.status(500).json({
+                ok: false,
+                msg: "No se encontro la factura, consulte con el administrador"
+            });
+        }
+    }
+    //Buscar Ponente
+const busquedaTaller = async(req, res = response) => {
+
+    const idlocal = req.params.idlocal;
+    const idponente = req.params.idponente;
+    const idsala = req.params.idsala;
+
+
+    try {
+        const existeTaller = await Factura.find({ idlocal, idponente, idsala });
+        if (!existeTaller) {
+            return res.status(404).json({
+                ok: false,
+                msg: "No existe Taller que coincida con la busqueda"
+            });
+        }
+        res.json({
+            ok: true,
+            taller: existeTaller
+        })
+    } catch (error) {
+
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: "No se encontro el taller, consulte con el administrador"
+        });
+    }
+}
 module.exports = {
     busquedaTotal,
+    busquedaFactura,
+    busquedaTaller,
 }

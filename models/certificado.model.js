@@ -13,7 +13,11 @@ const CertificadoSchema = Schema({
         type: Number,
         require: true
     },
-});
+    asistente: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Asistente',
+    }]
+}, { collection: 'certificados' });
 CertificadoSchema.method('toJSON', function() {
     const { __v, ...object } = this.toObject();
     return object;

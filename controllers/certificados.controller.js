@@ -10,6 +10,7 @@ const getCertificados = async(req, res) => {
     const [certificados, total] = await Promise.all([
         Certificado
         .find({}, 'nombre_certificado descripcion costo')
+        .populate('asistente', 'nombre apellidos dni')
         .skip(desde) //variable de paginacion
         .limit(limite), // cuantos valores traer
         Certificado.countDocuments()
